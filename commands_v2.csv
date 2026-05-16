@@ -1,0 +1,919 @@
+command,description,privilege_level
+git status,shows working tree status and staged/unstaged changes,0
+git log,displays commit history,0
+git log --oneline --graph,shows compact visual commit graph,0
+git log --oneline --graph --all,shows full branch commit graph,0
+git diff,shows unstaged changes in working directory,0
+git diff HEAD,shows all changes since last commit,0
+git diff --staged,shows changes staged for commit,0
+git diff main..feature,shows diff between two branches,0
+git blame app.py,shows line-by-line authorship for a file,0
+git show HEAD,shows diff and metadata of most recent commit,0
+git show HEAD~1,shows diff and metadata of second most recent commit,0
+git branch,lists all local branches,0
+git branch -a,lists all local and remote branches,0
+git branch -v,lists branches with last commit info,0
+git tag,lists all tags in the repository,0
+git stash list,lists all stash entries,0
+git remote -v,shows configured remote repositories,0
+git fetch,downloads remote changes without merging,0
+git fetch --all,fetches from all configured remotes,0
+git fetch --prune,fetches and removes stale remote-tracking branches,0
+git rev-parse HEAD,prints the current commit hash,0
+git rev-parse --abbrev-ref HEAD,prints the current branch name,0
+git shortlog -sn,summarizes commit counts by author,0
+git describe --tags,describes the current commit relative to nearest tag,0
+git bisect start,begins binary search through commit history to find a bug,0
+git bisect log,shows the bisect session log,0
+git worktree list,lists all linked working trees,0
+git submodule status,shows status of all submodules,0
+git ls-files,lists all tracked files in the repository,0
+git check-ignore -v .,shows which gitignore rules match files,0
+git config --list,shows all git configuration values,0
+git reflog,shows recent HEAD movements and branch checkouts,0
+git cherry -v main,shows commits not yet in main,0
+git count-objects -v,counts loose objects and disk usage,0
+git fsck,verifies connectivity and validity of objects,0
+git push origin main,pushes commits to main branch on remote,1
+git push origin --tags,pushes all local tags to remote,1
+git push origin feature-branch,pushes a feature branch to remote,1
+git pull origin main,pulls and merges latest changes from main,1
+git pull --rebase origin main,pulls and rebases local commits on top of remote,1
+git merge feature-branch,merges a feature branch into current branch,1
+git merge --no-ff feature-branch,merges with explicit merge commit preserving history,1
+git merge --squash feature-branch,squashes branch commits into single staged change,1
+git rebase main,rebases current branch onto main,1
+git rebase -i HEAD~3,interactively rewrites the last 3 commits,1
+git rebase -i HEAD~5,interactively rewrites the last 5 commits,1
+git rebase --continue,continues a rebase after resolving conflicts,1
+git rebase --abort,aborts an in-progress rebase and restores original state,1
+git cherry-pick abc1234,applies a specific commit to the current branch,1
+git cherry-pick --no-commit abc1234,applies commit changes without creating a commit,1
+git stash,saves uncommitted changes to the stash,1
+git stash push -m "wip: feature",saves stash with descriptive message,1
+git stash pop,applies most recent stash and removes it,1
+git stash apply stash@{0},applies a specific stash without removing it,1
+git commit -m "fix: resolve null pointer",creates a commit with a message,1
+git commit --amend --no-edit,amends most recent commit without changing message,1
+git commit --amend -m "fix: better message",amends most recent commit with new message,1
+git add -p,interactively stages hunks of changes,1
+git checkout -b feature/auth,creates and switches to a new branch,1
+git checkout -b hotfix/crash main,creates hotfix branch from main,1
+git switch -c feature/payments,creates and switches to new branch (modern syntax),1
+git tag v2.0,creates a lightweight tag at current commit,1
+git tag -a v2.0 -m "release 2.0",creates an annotated tag with message,1
+git mv old_name.py new_name.py,renames tracked file and stages the rename,1
+git submodule update --init --recursive,initializes and fetches all nested submodules,1
+git submodule add https://github.com/org/lib libs/lib,adds a submodule to the repository,1
+git lfs track "*.psd",configures Git LFS to track large files,1
+git lfs pull,downloads all LFS objects for current commit,1
+git bisect good abc1234,marks a commit as good during bisect,1
+git bisect bad,marks current commit as bad during bisect,1
+git bisect reset,ends bisect session and resets HEAD,1
+git worktree add ../feature-branch feature,creates a linked working tree for parallel work,1
+git archive --format=tar.gz HEAD > release.tar.gz,packages latest commit into compressed archive,1
+git config --global user.name "Name",sets global git username,1
+git config --global user.email "email",sets global git email,1
+git config --global core.autocrlf input,configures git to normalize line endings on commit,1
+git flow release start 1.0,starts a GitFlow release branch from develop,1
+git flow hotfix start fix-bug,creates a hotfix branch from main for urgent patch,1
+git push --force origin main,force-overwrites the remote main branch ignoring upstream changes,2
+git push --force-with-lease origin main,force-pushes only if no one else has pushed — safer force push,2
+git push origin --delete feature-branch,permanently deletes a remote branch for all collaborators,2
+git reset --hard HEAD,discards all uncommitted changes and restores last commit state,2
+git reset --hard HEAD~1,removes the last commit entirely and resets working tree,2
+git reset --hard HEAD~3,removes the last 3 commits entirely and resets working tree,2
+git clean -fd,deletes all untracked files and directories,2
+git clean -fdx,deletes all untracked files including those in .gitignore,2
+git filter-branch --tree-filter 'rm -f secret.txt' HEAD,rewrites every commit in history to remove a file,2
+git reflog expire --expire=now --all,permanently expires all reflog entries removing recovery points,2
+git remote remove origin,removes the configured remote repository connection,2
+git stash drop stash@{0},permanently removes a specific stash entry without applying it,2
+git rm -r --cached .,removes all tracked files from index while keeping local copies,2
+git config --global credential.helper store,saves git credentials in plaintext on disk — security risk,2
+git flow release finish 1.0,merges and tags a GitFlow release branch into main and develop,2
+git revert HEAD,creates a new commit that undoes the last commit — safe history rewrite,1
+git tag -d v1.0,deletes a local tag — reversible since remote still has it,1
+docker ps,lists currently running containers,0
+docker ps -a,lists all containers including stopped ones,0
+docker images,lists all local Docker images,0
+docker logs container_id,shows stdout and stderr logs from a container,0
+docker logs -f container_id,streams live logs from a container,0
+docker inspect container_id,shows detailed JSON config and state for a container,0
+docker stats,streams real-time resource usage for all containers,0
+docker stats --no-stream,shows one-time resource snapshot for all containers,0
+docker version,shows Docker client and daemon version info,0
+docker info,shows system-wide Docker configuration and resource info,0
+docker network ls,lists all Docker networks,0
+docker volume ls,lists all Docker volumes,0
+docker manifest inspect myapp:latest,inspects the manifest of a Docker image,0
+docker scan myapp:latest,scans a Docker image for known vulnerabilities,0
+docker history myapp:latest,shows layer history for a Docker image,0
+docker diff container_id,shows filesystem changes in a container,0
+docker port container_id,lists port mappings for a container,0
+docker top container_id,shows running processes inside a container,0
+docker build -t myapp:latest .,builds a Docker image from Dockerfile in current directory,1
+docker build --no-cache -t myapp:latest .,builds Docker image bypassing cache,1
+docker build -t myapp:latest --build-arg ENV=prod .,builds Docker image with build argument,1
+docker pull ubuntu:22.04,downloads an image from Docker Hub,1
+docker push myrepo/myapp:v1,uploads a tagged image to a container registry,1
+docker run -d -p 80:80 --name web nginx,starts a detached nginx container on port 80,1
+docker run --rm -it ubuntu bash,runs a temporary interactive container,1
+docker run --rm -it --network host myapp bash,runs container with host networking,1
+docker exec -it container_id /bin/bash,opens interactive shell inside running container,1
+docker exec container_id command,runs a single command inside running container,1
+docker start container_id,starts a stopped container,1
+docker stop container_id,gracefully stops a running container,1
+docker restart container_id,restarts a running container,1
+docker tag myapp:latest myrepo/myapp:prod,tags an image for pushing to a registry,1
+docker cp file.txt container_id:/app/,copies a file into a running container,1
+docker cp container_id:/app/file.txt .,copies a file out of a running container,1
+docker-compose up -d,starts all services in docker-compose.yml in detached mode,1
+docker-compose up --build,rebuilds images and starts services,1
+docker-compose down,stops and removes containers and networks from compose,1
+docker-compose restart service_name,restarts a specific compose service,1
+docker-compose logs -f service_name,streams logs from a compose service,1
+docker-compose exec service_name bash,opens shell in a running compose service,1
+docker network create app-network,creates a new Docker bridge network,1
+docker save myapp:latest | gzip > myapp.tar.gz,exports Docker image to compressed archive,1
+docker load < myapp.tar.gz,loads Docker image from archive file,1
+docker buildx create --use,creates and activates a new BuildKit builder,1
+docker buildx build --platform linux/amd64,linux/arm64 -t myapp:latest --push .,builds multi-platform image and pushes to registry,1
+docker context create remote --docker host=ssh://user@host,creates Docker context for remote daemon,1
+docker context use remote,switches active Docker context to remote host,1
+docker login registry.example.com,authenticates with a container registry,1
+docker logout registry.example.com,removes stored credentials for a registry,1
+docker rm -f container_id,forcefully stops and removes a running container,2
+docker rmi -f image_id,force-deletes a Docker image even with dependent containers,2
+docker rmi $(docker images -q),removes all Docker images — destructive,2
+docker system prune -af,removes all stopped containers unused images and cache,2
+docker system prune --volumes,removes all unused data including volumes,2
+docker network rm network_name,deletes a Docker network disrupting attached containers,2
+docker volume rm volume_name,permanently deletes a named volume and all its data,2
+docker kill container_id,sends SIGKILL to a container terminating it without cleanup,2
+docker stop $(docker ps -q),stops all currently running containers,2
+docker-compose down -v,stops services and permanently deletes associated volumes,2
+docker swarm leave --force,forces a node to leave the swarm breaking orchestration,2
+docker stack rm mystack,removes an entire Docker stack and all its services,2
+docker buildx bake --push,builds all targets in Bake file and pushes to registry,2
+kubectl get pods,lists all pods in current namespace,0
+kubectl get pods -A,lists all pods across all namespaces,0
+kubectl get pods -n production,lists pods in a specific namespace,0
+kubectl get pods -o wide,lists pods with node and IP information,0
+kubectl get deployments,lists all deployments in current namespace,0
+kubectl get services,lists all services in current namespace,0
+kubectl get nodes,lists all nodes in the cluster,0
+kubectl get namespaces,lists all namespaces in the cluster,0
+kubectl get configmaps,lists all configmaps in current namespace,0
+kubectl get secrets,lists secret names in current namespace — values not shown,0
+kubectl get ingress -A,lists all ingress resources across namespaces,0
+kubectl get pv,lists all persistent volumes in the cluster,0
+kubectl get pvc,lists all persistent volume claims in current namespace,0
+kubectl get storageclasses,lists all storage classes available,0
+kubectl get networkpolicies -A,lists all network policies across namespaces,0
+kubectl get horizontalpodautoscaler -A,lists all HPA configurations,0
+kubectl get events -n production --sort-by=.metadata.creationTimestamp,lists events in a namespace sorted by time,0
+kubectl get all -n staging,lists all resources in staging namespace,0
+kubectl describe pod app-xyz,shows detailed status and events for a pod,0
+kubectl describe node node-1,shows detailed resource info for a node,0
+kubectl describe deployment app,shows deployment status rollout and events,0
+kubectl logs pod/app-xyz,shows logs from a pod,0
+kubectl logs pod/app-xyz --tail=100,shows last 100 log lines from a pod,0
+kubectl logs pod/app-xyz -f,streams live logs from a pod,0
+kubectl logs pod/app-xyz -c container-name,shows logs from a specific container in a pod,0
+kubectl logs pod/app-xyz --previous,shows logs from a crashed container's previous instance,0
+kubectl top pods,shows real-time CPU and memory for all pods,0
+kubectl top nodes,shows real-time CPU and memory for all nodes,0
+kubectl rollout status deployment/app,monitors progress of a rolling deployment update,0
+kubectl rollout history deployment/app,shows revision history of a deployment,0
+kubectl auth can-i delete pods --as=user@example.com,checks if a user has permission to delete pods,0
+kubectl api-resources,lists all available Kubernetes API resource types,0
+kubectl explain deployment.spec.strategy,shows documentation for a Kubernetes spec field,0
+kubectl version,shows kubectl client and server version,0
+kubectl cluster-info,shows addresses of Kubernetes control plane and addons,0
+kubectl config view,shows current kubeconfig settings,0
+kubectl config get-contexts,lists all available kubeconfig contexts,0
+kubectl config current-context,shows the current active context,0
+kubectl get configmap app-config -o yaml,retrieves a configmap in YAML format,0
+kubectl apply -f deployment.yaml,creates or updates Kubernetes resources from a manifest,1
+kubectl apply -f https://raw.githubusercontent.com/org/repo/main/deploy.yaml,applies a remote Kubernetes manifest — verify source first,1
+kubectl create namespace staging,creates a new isolated namespace,1
+kubectl create configmap app-config --from-file=config.yaml,creates a configmap from a config file,1
+kubectl create secret generic db-pass --from-literal=password=secret,creates a Kubernetes secret with credentials,1
+kubectl create secret tls my-tls --cert=tls.crt --key=tls.key,creates a TLS secret from certificate files,1
+kubectl create serviceaccount app-sa,creates a service account for workload identity,1
+kubectl scale deployment app --replicas=5,scales a deployment to 5 replicas,1
+kubectl set image deployment/app container=image:v2,updates container image triggering a rollout,1
+kubectl set env deployment/app DB_HOST=postgres,sets environment variable on a deployment,1
+kubectl expose deployment app --port=80,creates a service to expose a deployment,1
+kubectl port-forward pod/app-xyz 8080:80,forwards local port to a pod for local access,1
+kubectl port-forward svc/app 8080:80,forwards local port to a service,1
+kubectl label node node-1 env=production,adds a scheduling label to a node,1
+kubectl annotate deployment app key=value,adds an annotation to a Kubernetes resource,1
+kubectl config use-context prod-cluster,switches the active kubeconfig context,1
+kubectl config set-context --current --namespace=staging,sets default namespace in current context,1
+kubectl exec -it pod/app-xyz -- bash,opens an interactive shell in a running pod,1
+kubectl cp pod/app-xyz:/app/log.txt ./log.txt,copies a file from a pod to local filesystem,1
+kubectl apply -k overlays/production,applies a Kustomize overlay,1
+kubectl rollout restart deployment/app,triggers a rolling restart replacing all pods,2
+kubectl rollout undo deployment/app,rolls back a deployment to previous revision,2
+kubectl delete namespace production,deletes an entire namespace and all resources within it,2
+kubectl delete deployment app-deployment,removes a deployment and terminates all pods,2
+kubectl scale deployment api --replicas=0,scales a deployment to zero shutting down all pods,2
+kubectl delete all --all -n staging,deletes all resources in a namespace,2
+kubectl drain node-1 --ignore-daemonsets,evicts all pods from a node for maintenance,2
+kubectl cordon node-2,marks a node as unschedulable,2
+kubectl taint node node-1 key=value:NoSchedule,taints a node to prevent pod scheduling without toleration,2
+kubectl edit configmap app-config,opens a live configmap for in-place editing,2
+kubectl patch deployment app -p '{"spec":{"replicas":0}}',patches a deployment to reduce replicas to zero,2
+kubectl delete pvc data-volume,deletes a PersistentVolumeClaim and potentially underlying storage,2
+kubectl delete secret db-credentials,removes a Kubernetes secret making it unavailable to pods,2
+kubectl delete rolebinding dev-access -n dev,removes a role binding revoking associated permissions,2
+kubectl delete serviceaccount app-sa,removes a Kubernetes service account,2
+kubectl create rolebinding dev-access --clusterrole=edit --user=devuser -n dev,creates a role binding granting a user edit access,1
+terraform validate,checks Terraform configuration for syntax errors,0
+terraform plan,shows what changes Terraform will make,0
+terraform plan -out=tfplan,saves Terraform execution plan to file,0
+terraform output,displays output values from current Terraform state,0
+terraform state list,lists all resources tracked in Terraform state,0
+terraform state show aws_instance.web,shows attributes of a resource in state,0
+terraform state pull,retrieves and displays raw Terraform state,0
+terraform version,shows installed Terraform version,0
+terraform fmt -check,checks if Terraform files are properly formatted,0
+terraform providers,shows providers required by current configuration,0
+terraform graph,generates a Terraform dependency graph,0
+terraform workspace list,lists all Terraform workspaces,0
+terraform workspace show,shows current Terraform workspace,0
+terraform init,initializes Terraform working directory and downloads providers,1
+terraform init -upgrade,initializes workspace and upgrades provider plugins,1
+terraform fmt -recursive,formats all Terraform configuration files,1
+terraform apply,plans and applies infrastructure changes with confirmation prompt,1
+terraform import aws_instance.web i-1234567890,imports existing cloud infrastructure into Terraform state,1
+terraform workspace new production,creates a new isolated Terraform workspace,1
+terraform workspace select staging,switches active Terraform workspace,1
+terraform providers lock,creates or updates the dependency lock file,1
+terraform providers mirror ./mirror,downloads provider plugins to local mirror,1
+terraform apply -auto-approve,provisions infrastructure without interactive confirmation,2
+terraform destroy -auto-approve,destroys all managed infrastructure without confirmation,2
+terraform destroy,destroys all managed infrastructure with confirmation prompt,2
+terraform state rm aws_instance.web,removes a resource from state decoupling it from management,2
+terraform state mv source destination,moves a resource within or between state files,2
+terraform force-unlock LOCK_ID,releases a stuck Terraform state lock,2
+terraform taint aws_s3_bucket.data,marks a resource for forced recreation on next apply,2
+terraform workspace delete staging,deletes a Terraform workspace and its state,2
+terraform apply -target=aws_instance.web,applies changes only to a targeted resource,2
+ansible-inventory --list,prints full inventory structure as JSON,0
+ansible -m ping all,pings all inventory hosts verifying SSH connectivity,0
+ansible-playbook provision.yml --check,dry-run playbook showing predicted changes without applying,0
+ansible-playbook site.yml --list-tasks,lists all tasks that would run without executing,0
+ansible-playbook site.yml -vvv,runs playbook with maximum verbosity for debugging,0
+ansible --version,shows installed Ansible version and config paths,0
+ansible-vault view secrets.yml,decrypts and displays vault content without writing plaintext,0
+ansible-playbook site.yml,executes a full Ansible playbook on target hosts,1
+ansible-playbook site.yml --limit db-servers,runs playbook only against db-servers host group,1
+ansible-playbook deploy.yml -e "env=production",runs playbook with extra variable overriding defaults,1
+ansible -m service -a "name=nginx state=restarted" webservers,restarts nginx on all web servers,1
+ansible-galaxy install geerlingguy.mysql,downloads and installs a community Ansible role,1
+ansible-playbook deploy.yml --tags deploy,runs only tasks tagged deploy,1
+ansible-vault encrypt secrets.yml,encrypts a plaintext YAML file with sensitive variables,1
+ansible-playbook hardening.yml,applies a security hardening playbook to target hosts,1
+ansible all -m shell -a "reboot",reboots all hosts in inventory immediately,2
+ansible-playbook deploy.yml --tags rollback,executes only rollback tasks reverting a deployment,2
+ansible-vault rekey secrets.yml,changes the encryption password on a vault-encrypted file,2
+ansible -m user -a "name=devuser state=absent" all,removes a user account from all managed hosts,2
+ansible-vault decrypt secrets.yml,decrypts a vault-encrypted file back to plaintext,2
+aws s3 ls s3://my-bucket,lists contents of an S3 bucket,0
+aws ec2 describe-instances,retrieves metadata for EC2 instances,0
+aws ec2 describe-instances --instance-ids i-abc123,retrieves metadata for a specific EC2 instance,0
+aws cloudwatch get-metric-statistics --metric-name CPUUtilization,fetches CloudWatch CPU metrics,0
+aws sts get-caller-identity,shows current AWS account and IAM identity,0
+aws logs get-log-events --log-group-name /app/prod,retrieves log events from a CloudWatch log group,0
+aws iam list-users,lists all IAM users in the account,0
+aws iam get-user --user-name admin,retrieves information about a specific IAM user,0
+aws s3api get-bucket-policy --bucket my-bucket,retrieves the S3 bucket policy document,0
+aws cloudformation describe-stacks --stack-name prod,shows details and outputs of a CloudFormation stack,0
+aws eks describe-cluster --name prod-cluster,retrieves configuration and status of an EKS cluster,0
+aws rds describe-db-instances,lists all RDS database instances and configurations,0
+aws iam simulate-principal-policy --policy-source-arn arn:... --action-names s3:GetObject,simulates IAM policy evaluation to check permissions,0
+aws cloudwatch describe-alarms --state-value ALARM,lists all CloudWatch alarms currently in ALARM state,0
+aws ec2 describe-security-groups --group-ids sg-123,retrieves inbound and outbound rules for a security group,0
+aws ssm start-session --target i-1234567890abcdef0,opens interactive Systems Manager session to EC2 instance,1
+aws ec2 start-instances --instance-ids i-abc123,starts a stopped EC2 instance,1
+aws ec2 stop-instances --instance-ids i-abc123,stops a running EC2 instance freeing compute resources,1
+aws s3 cp file.txt s3://my-bucket/,uploads a local file to an S3 bucket,1
+aws s3 sync ./dist s3://my-bucket/,synchronizes a local directory to an S3 bucket,1
+aws lambda update-function-code --function-name myFunc --zip-file fileb://app.zip,updates Lambda function code in production,1
+aws iam create-user --user-name newuser,creates a new IAM user account,1
+aws iam attach-user-policy --user-name newuser --policy-arn arn:...,attaches an IAM policy to a user,1
+aws iam create-access-key --user-name deploy-bot,generates new programmatic access key for an IAM user,1
+aws iam update-access-key --user-name deploy-bot --access-key-id AKIA... --status Inactive,deactivates an IAM access key without deleting it,1
+aws ec2 create-snapshot --volume-id vol-123,creates a point-in-time EBS snapshot for backup,1
+aws ec2 authorize-security-group-ingress --group-id sg-123 --protocol tcp --port 443 --cidr 0.0.0.0/0,adds firewall rule allowing HTTPS traffic,1
+aws cloudtrail create-trail --name mytrail --s3-bucket-name mybucket,creates a CloudTrail trail logging API activity,1
+aws kms create-key --description "App encryption key",creates a new KMS encryption key,1
+aws secretsmanager put-secret-value --secret-id mySecret --secret-string '{"password":"newval"}',updates the value of an existing secret,1
+aws ssm put-parameter --name /app/db_pass --value secret --type SecureString,stores an encrypted secret in Parameter Store,1
+aws ecs update-service --cluster prod --service api --force-new-deployment,forces a new ECS service deployment,1
+aws cloudformation deploy --template-file template.yml --stack-name mystack,deploys a CloudFormation stack,1
+aws ec2 revoke-security-group-ingress --group-id sg-123 --protocol tcp --port 22 --cidr 0.0.0.0/0,revokes a security group rule blocking inbound SSH,1
+aws ec2 terminate-instances --instance-ids i-abc123,permanently terminates EC2 instances destroying storage,2
+aws rds delete-db-instance --db-instance-identifier mydb --skip-final-snapshot,deletes RDS database without final backup,2
+aws s3 rm s3://my-bucket --recursive,permanently deletes all objects in an S3 bucket,2
+aws s3 rb s3://my-bucket --force,force-deletes an S3 bucket and all its contents,2
+aws iam delete-user --user-name devuser,permanently removes an IAM user and revokes access,2
+aws iam delete-role --role-name MyRole,permanently deletes an IAM role,2
+aws iam delete-policy --policy-arn arn:aws:iam::123:policy/MyPolicy,deletes a customer-managed IAM policy,2
+aws iam delete-access-key --user-name deploy-bot --access-key-id AKIA...,permanently deletes an IAM access key pair,2
+aws iam update-login-profile --user-name admin --password NewPass123!,resets AWS console password for an IAM user,2
+aws cloudformation delete-stack --stack-name prod-stack,deletes entire CloudFormation stack and all resources,2
+aws eks delete-cluster --name prod-cluster,deletes an EKS cluster and removes the control plane,2
+aws lambda delete-function --function-name myFunction,permanently deletes a Lambda function,2
+aws dynamodb delete-table --table-name users,permanently deletes a DynamoDB table and all data,2
+aws ec2 delete-snapshot --snapshot-id snap-123,permanently deletes an EBS snapshot removing the backup,2
+aws ecr delete-repository --repository-name myapp --force,force-deletes an ECR container registry and all images,2
+aws cloudwatch delete-alarms --alarm-names HighCPU,deletes a CloudWatch alarm removing monitoring coverage,2
+aws sns delete-topic --topic-arn arn:aws:sns:us-east-1:123:MyTopic,permanently deletes an SNS topic and all subscriptions,2
+aws sqs delete-queue --queue-url https://sqs.amazonaws.com/123/MyQueue,permanently deletes an SQS queue and all messages,2
+aws kms disable-key --key-id abc123,disables a KMS key blocking all cryptographic operations,2
+aws kms schedule-key-deletion --key-id abc123 --pending-window-in-days 7,schedules a KMS key for deletion in 7 days,2
+aws secretsmanager delete-secret --secret-id mySecret --force-delete-without-recovery,permanently deletes a secret with no recovery window,2
+aws cloudtrail delete-trail --name mytrail,deletes a CloudTrail audit logging trail,2
+aws cloudtrail stop-logging --name mytrail,stops audit event logging to a CloudTrail trail,2
+aws guardduty delete-detector --detector-id abc123,disables and deletes an AWS GuardDuty detector,2
+aws eks update-nodegroup-config --cluster-name prod --nodegroup-name ng-1 --scaling-config minSize=0,maxSize=0,desiredSize=0,scales down EKS node group to zero draining all capacity,2
+aws autoscaling update-auto-scaling-group --auto-scaling-group-name myASG --min-size 0 --max-size 0,sets Auto Scaling group to zero instances,2
+aws elb delete-load-balancer --load-balancer-name myELB,permanently deletes a Classic Load Balancer,2
+aws elbv2 delete-load-balancer --load-balancer-arn arn:...,deletes an Application or Network Load Balancer,2
+aws route53 delete-hosted-zone --id Z123ABC,permanently deletes a Route53 hosted zone and all DNS records,2
+aws acm delete-certificate --certificate-arn arn:...,deletes an ACM TLS certificate potentially breaking HTTPS,2
+aws ssm send-command --instance-ids i-123 --document-name AWS-RunShellScript --parameters commands="reboot",runs a shell command on EC2 via Systems Manager,2
+aws elasticache delete-cluster --cache-cluster-id mycluster,deletes an ElastiCache cluster,2
+gcloud compute instances list,lists all GCP VM instances across zones,0
+gcloud projects list,lists all GCP projects accessible to current account,0
+gcloud compute firewall-rules list,lists all firewall rules in current GCP project,0
+gcloud logging read "severity=ERROR" --limit=50,fetches last 50 error-level log entries from Cloud Logging,0
+gcloud compute instances stop prod-vm,stops a running GCP VM halting compute and billing,1
+gcloud compute instances start prod-vm,starts a stopped GCP VM resuming operations,1
+gcloud builds submit --tag gcr.io/project/image,builds and pushes container image to Google Container Registry,1
+gcloud run deploy myservice --image gcr.io/project/image,deploys a container image to Google Cloud Run,1
+gcloud functions deploy myFunc --runtime python39,deploys or updates a Cloud Function,1
+gcloud compute ssh prod-vm --zone=us-central1-a,opens SSH session to a GCP VM,1
+gcloud iam roles create CustomRole --permissions=compute.instances.list,creates a custom IAM role,1
+gcloud container clusters get-credentials prod-cluster,configures kubectl to access a GKE cluster,1
+gcloud compute instances delete prod-vm --zone=us-central1-a,permanently deletes a Google Cloud VM,2
+gcloud sql instances delete my-db,deletes a Cloud SQL database instance and all data,2
+gcloud projects delete my-project-id,permanently deletes a GCP project and all resources,2
+gcloud container clusters delete prod-cluster,deletes a GKE cluster removing all nodes and workloads,2
+gcloud iam service-accounts delete sa@project.iam.gserviceaccount.com,removes a service account and revokes credentials,2
+gcloud compute firewall-rules delete allow-http,deletes a firewall rule potentially blocking traffic,2
+az vm list --resource-group myRG,lists all VMs in a resource group,0
+az monitor activity-log list,retrieves the Azure activity log for auditing,0
+az network nsg list --resource-group myRG,lists all Azure network security groups,0
+az monitor log-analytics query --workspace myWorkspace --analytics-query "AzureActivity | limit 50",queries Azure Log Analytics for activity events,0
+az vm deallocate --resource-group myRG --name myVM,stops and deallocates an Azure VM,1
+az vm start --resource-group myRG --name myVM,starts a stopped Azure VM,1
+az webapp deploy --resource-group myRG --name myapp --src-path app.zip,deploys an application to an Azure Web App,1
+az functionapp create --resource-group myRG --name myFunc --runtime python,creates a new Azure Function App,1
+az acr build --registry myregistry --image myapp:v1 .,builds and pushes image to Azure Container Registry,1
+az keyvault secret set --vault-name myVault --name db-pass --value secret,stores a secret in Azure Key Vault,1
+az vm delete --resource-group myRG --name myVM --yes,permanently deletes an Azure VM and disks,2
+az group delete --name myRG --yes --no-wait,deletes an entire Azure resource group and all resources,2
+az aks delete --resource-group myRG --name myCluster,deletes an Azure Kubernetes Service cluster,2
+az sql db delete --resource-group myRG --server mysqlserver --name mydb,deletes an Azure SQL database,2
+az role assignment delete --assignee user@email.com,removes a role assignment revoking user permissions,2
+az aks scale --resource-group myRG --name myCluster --node-count 5,scales an AKS cluster node pool,2
+pip show flask,shows metadata about an installed package,0
+pip list,lists all installed Python packages,0
+pip list --outdated,lists installed packages with newer versions available,0
+pip check,checks for dependency conflicts in installed packages,0
+pip freeze,outputs all installed packages and versions,0
+pip install flask,installs the Flask web framework,1
+pip install flask==2.3.0,installs a specific version of Flask,1
+pip install -r requirements.txt,installs all Python dependencies from requirements file,1
+pip install -e .,installs current package in editable development mode,1
+pip install --upgrade pip,upgrades pip itself to latest version,1
+pip install --upgrade setuptools,upgrades setuptools to latest version,1
+pip install tensorflow-gpu,installs TensorFlow with GPU support,1
+pip install pyinstaller,installs PyInstaller for packaging Python apps,1
+pip install pytest,installs the pytest testing framework,1
+pip freeze > requirements.txt,captures all installed package versions to requirements file,1
+pip uninstall numpy -y,removes the NumPy package from the Python environment,1
+pip download -r requirements.txt -d ./vendor,downloads dependencies to local directory for offline use,1
+npm ls,shows the full dependency tree of installed packages,0
+npm outdated,lists packages with newer versions available,0
+npm audit,scans dependencies for known security vulnerabilities,0
+npm install,installs all dependencies from package.json,1
+npm install express --save,installs Express as a production dependency,1
+npm install jest --save-dev,installs Jest as a development dependency,1
+npm install -g npm-check-updates,globally installs npm-check-updates tool,1
+npm uninstall lodash,removes a package and updates package.json,1
+npm update,upgrades packages to latest versions within semver range,1
+npm run build,executes the build script from package.json,1
+npm run start:prod,runs the production start script,1
+npm run test,runs the test script from package.json,1
+npm cache clean --force,clears the npm local cache,1
+npm link,creates a global symlink for the local package,1
+npm publish,publishes the package to the npm registry,2
+npm deprecate mypackage@1.0.0 "Use v2 instead",marks a package version as deprecated on the registry,2
+npm audit fix --force,installs security patches including breaking version changes,2
+yarn outdated,lists all outdated dependencies across the project,0
+yarn install,installs all dependencies from yarn.lock,1
+yarn add axios,adds a library as a dependency,1
+yarn add -D jest,adds a library as a dev dependency,1
+yarn remove lodash,removes a package from the project,1
+yarn upgrade react --latest,upgrades a package to latest ignoring semver range,2
+yarn global add nodemon,installs a package globally via Yarn,1
+yarn build,runs the build script via Yarn,1
+yarn cache clean,clears Yarn's local package cache,1
+yarn publish,publishes current package to npm registry via Yarn,2
+mvn test,runs all unit tests in Maven project,0
+mvn dependency:tree,prints full resolved dependency tree,0
+mvn clean package -DskipTests,builds Maven project skipping test execution,1
+mvn clean install,compiles tests and installs artifact locally,1
+mvn versions:set -DnewVersion=2.0.0,updates project version across all POM files,1
+mvn archetype:generate,scaffolds a new Maven project from template,1
+mvn deploy,builds and deploys artifact to remote Maven repository,2
+mvn dependency:purge-local-repository,deletes and re-downloads all Maven dependencies,2
+mvn release:prepare,prepares a Maven release tagging codebase and updating versions,2
+mvn release:perform,builds and deploys the release artifact to the repository,2
+gradle test,runs all tests in the Gradle project,0
+gradle dependencyUpdates,checks for newer dependency versions,0
+gradle assemble,assembles output artifacts without running tests,1
+gradle clean build,cleans and performs a full Gradle build,1
+gradle wrapper --gradle-version 8.0,generates or updates Gradle wrapper to specified version,1
+gradle clean,removes compiled outputs and build directory,1
+gradle publish,publishes artifacts to configured remote repository,2
+cargo test,compiles and runs all tests in the Rust project,0
+cargo clippy,runs Rust linter to catch common mistakes,0
+cargo doc --open,generates and opens Rust project documentation,0
+cargo bench,runs benchmark tests in the Rust project,0
+cargo audit,checks Rust dependencies for known vulnerabilities,0
+cargo build --release,compiles Rust project in release mode with optimizations,1
+cargo update,updates Cargo.lock to latest compatible dependency versions,1
+cargo install cargo-edit,installs a third-party Cargo subcommand globally,1
+cargo add serde --features derive,adds a crate with features to Cargo.toml,1
+cargo remove serde,removes a dependency from Cargo.toml,1
+cargo fmt,formats Rust source code to standard style,1
+cargo clean,removes Rust build artifacts freeing disk space,1
+cargo publish,publishes the Rust crate to crates.io,2
+go test ./...,runs all tests in all packages of the Go module,0
+go vet ./...,analyzes Go code for suspicious constructs,0
+go tool cover -html=coverage.out,generates HTML coverage report from coverage profile,0
+go build ./...,compiles all Go packages in the module,1
+go build -ldflags="-s -w" -o app .,compiles Go binary with stripped symbols for smaller output,1
+go run main.go,compiles and immediately runs a Go source file,1
+go install ./...,compiles and installs all Go binaries to GOPATH bin,1
+go mod tidy,removes unused dependencies and adds missing ones,1
+go mod download,downloads all modules in go.sum to local cache,1
+go mod vendor,copies all dependencies into local vendor directory,1
+go get github.com/gin-gonic/gin,downloads and adds a package as a Go module dependency,1
+go work sync,synchronizes go.work workspace module graph,1
+go generate ./...,runs code generation directives in Go source files,1
+go get -u ./...,updates all Go dependencies to latest minor versions,2
+go clean -modcache,deletes the entire Go module download cache,2
+make test,runs the test target from Makefile,0
+make all,builds all targets defined in Makefile,1
+make clean,removes compiled artifacts and build files,1
+make install,executes install target from Makefile copying binaries,1
+make uninstall,reverses install target removing installed files,2
+helm list,lists all deployed Helm releases,0
+helm show values myrepo/nginx,shows default values.yaml for a Helm chart,0
+helm get values myapp,shows values used in an existing Helm release,0
+helm history myapp,lists all revision history for a deployed Helm release,0
+helm diff upgrade myapp ./chart,previews diff between current and proposed chart changes,0
+helm lint ./chart,checks Helm chart for errors and best practices,0
+helm template ./chart,renders chart templates locally for inspection,0
+helm repo add stable https://charts.helm.sh/stable,adds a Helm chart repository to local config,1
+helm repo update,refreshes all Helm chart repository indexes,1
+helm repo remove deprecated-charts,removes a Helm chart repository from local config,1
+helm dependency update ./chart,downloads chart dependencies from Chart.yaml,1
+helm package ./chart,packages Helm chart directory into versioned archive,1
+helm push chart-1.0.0.tgz oci://registry.example.com/charts,pushes Helm chart to OCI-compatible registry,1
+helm test myapp,runs test hooks defined in a deployed Helm chart,1
+helm install myapp ./chart,deploys a Helm chart to Kubernetes cluster,2
+helm upgrade myapp ./chart,upgrades an existing Helm release with new chart version,2
+helm upgrade --install myapp ./chart --atomic,upgrades or installs chart rolling back on failure,2
+helm uninstall myapp,removes a deployed Helm release and Kubernetes resources,2
+helm rollback myapp 1,rolls back a Helm release to previous revision,2
+psql -U postgres -c "SELECT version();",returns PostgreSQL server version,0
+psql -U postgres -c "\l",lists all databases on the PostgreSQL server,0
+psql -U postgres -c "\dt",lists all tables in current database,0
+mysql -u root -p -e "SHOW DATABASES;",lists all databases on MySQL server,0
+mysql -u root -p -e "SHOW PROCESSLIST;",shows all active MySQL connections,0
+sqlite3 app.db ".tables",lists all tables in a SQLite database,0
+redis-cli INFO server,shows Redis server information and statistics,0
+redis-cli KEYS *,lists all keys in current Redis database — avoid on prod,0
+redis-cli DBSIZE,returns the number of keys in current Redis database,0
+mongodump --uri="mongodb://localhost/mydb" --out=/backup,creates a full binary dump of a MongoDB database,1
+pg_dump -U postgres mydb > backup.sql,exports entire PostgreSQL database to SQL backup file,1
+mysqldump -u root -p mydb > backup.sql,dumps a MySQL database to SQL file for backup,1
+sqlite3 app.db ".dump" > backup.sql,exports full SQLite database to SQL backup file,1
+sqlite3 app.db "VACUUM;",rebuilds SQLite database file reclaiming unused space,1
+psql -U postgres -c "CREATE DATABASE mydb;",creates a new PostgreSQL database,1
+psql -U postgres -c "CREATE USER devuser WITH PASSWORD 'pass';",creates a new PostgreSQL user with password,1
+psql -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE mydb TO devuser;",grants full access privileges to a user on a database,1
+mysql -u root -p -e "FLUSH PRIVILEGES;",reloads MySQL privilege tables applying manual changes,1
+redis-cli CONFIG SET maxmemory 512mb,changes the Redis memory limit,1
+redis-cli SAVE,forces synchronous RDB snapshot of Redis dataset to disk,1
+mongo --eval "db.collection.createIndex({email:1},{unique:true})" mydb,creates a unique index on a MongoDB collection,1
+mongo --eval "db.collection.updateMany({},{'\$set':{active:true}})" mydb,updates all documents in a MongoDB collection,1
+psql -U postgres -c "DROP DATABASE mydb;",permanently deletes a PostgreSQL database and all data,2
+psql -U postgres -c "DROP ROLE devuser;",removes a PostgreSQL role revoking all privileges,2
+psql -U postgres -c "TRUNCATE TABLE orders;",deletes all rows from a table without logging,2
+psql -U postgres -c "DROP TABLE users;",permanently removes a table and all its data,2
+psql -U postgres -c "REVOKE ALL ON DATABASE mydb FROM devuser;",revokes all privileges from a user on a database,2
+pg_restore -U postgres -d mydb backup.dump,restores PostgreSQL database from dump overwriting data,2
+mysql -u root -p -e "DROP DATABASE mydb;",permanently deletes a MySQL database and all tables,2
+mysql -u root -p -e "DROP USER 'devuser'@'localhost';",removes a MySQL user and their privileges,2
+mysql -u root -p mydb < backup.sql,restores MySQL database from SQL file overwriting data,2
+mysql -u root -p -e "GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' WITH GRANT OPTION;",grants global superuser privileges to a MySQL user,2
+mysql -u root -p -e "TRUNCATE TABLE sessions;",removes all rows from sessions table without logging,2
+sqlite3 app.db "DROP TABLE logs;",permanently removes a table from SQLite database,2
+sqlite3 app.db "DELETE FROM users WHERE id < 100;",deletes records from SQLite matching a condition,2
+mongorestore --uri="mongodb://localhost/mydb" /backup/mydb,restores MongoDB database from binary dump,2
+mongo --eval "db.dropDatabase()" mydb,permanently drops a MongoDB database and all collections,2
+mongo --eval "db.users.drop()" mydb,drops a MongoDB collection and all its documents,2
+mongo --eval "db.createUser({user:'admin',pwd:'pass',roles:['root']})" admin,creates a MongoDB admin user with root privileges,2
+mongo --eval "db.users.deleteMany({})" mydb,deletes all documents in a MongoDB collection,2
+redis-cli FLUSHALL,removes all keys from all Redis databases immediately,2
+redis-cli FLUSHDB,clears all keys from the current Redis database,2
+redis-cli SHUTDOWN NOSAVE,immediately shuts down Redis without saving dataset,2
+redis-cli CONFIG SET requirepass newpassword,sets or changes the Redis authentication password,2
+rabbitmqctl list_queues,lists all queues and message counts in RabbitMQ,0
+kafka-topics.sh --list --bootstrap-server localhost:9092,lists all Kafka topics on the broker,0
+kafka-consumer-groups.sh --describe --group my-group --bootstrap-server localhost:9092,shows lag and offset details for a consumer group,0
+etcdctl get /config/app,retrieves a value from etcd,0
+vault kv get secret/db_password,retrieves a secret value from HashiCorp Vault,0
+vault status,displays initialization and seal status of Vault server,0
+consul members,lists all members and status in Consul cluster,0
+rabbitmqctl add_user myuser mypassword,creates a new RabbitMQ user,1
+rabbitmqctl set_permissions -p / myuser ".*" ".*" ".*",grants full permissions to a RabbitMQ user,1
+kafka-topics.sh --create --topic events --partitions 6 --replication-factor 3 --bootstrap-server localhost:9092,creates a Kafka topic with partition and replication settings,1
+kafka-configs.sh --alter --entity-type topics --entity-name my-topic --add-config retention.ms=3600000,modifies retention settings on a Kafka topic,1
+etcdctl put /config/app/version 2.0,writes a configuration value to etcd,1
+vault kv put secret/app/config db_password=secret,stores a key-value secret in HashiCorp Vault,1
+vault auth enable ldap,enables LDAP authentication on Vault server,1
+vault policy write app-policy policy.hcl,creates or updates a Vault policy governing secret access,1
+vault token create -policy=read-only,generates a new Vault token with specified policy,1
+consul kv put config/app/db_url "postgres://...",writes a configuration value to Consul key-value store,1
+consul services register service.json,registers a service definition with Consul agent,1
+rabbitmq-server stop,stops the RabbitMQ message broker server,2
+rabbitmqctl stop_app,stops the RabbitMQ application keeping runtime active,2
+rabbitmqctl delete_queue my_queue,permanently deletes a RabbitMQ queue and all messages,2
+rabbitmqctl set_user_tags myuser administrator,grants administrator permissions to a RabbitMQ user,2
+rabbitmqctl purge_queue my_queue,deletes all pending messages from a queue,2
+kafka-topics.sh --delete --topic my-topic --bootstrap-server localhost:9092,permanently deletes a Kafka topic and all message data,2
+kafka-consumer-groups.sh --reset-offsets --to-earliest --group my-group --all-topics --execute --bootstrap-server localhost:9092,resets consumer group offsets causing message reprocessing,2
+etcdctl del /config/app,deletes a key from the etcd key-value store,2
+vault operator seal,seals the Vault server making all secrets inaccessible,2
+vault secrets disable secret/,disables an entire Vault secrets engine removing all data,2
+vault lease revoke -prefix aws/creds/,revokes all dynamic credentials from AWS secrets engine,2
+vault kv delete secret/db_password,deletes a secret from HashiCorp Vault,2
+consul kv delete config/app/db_url,permanently deletes a key from Consul key-value store,2
+consul leave,gracefully removes current node from Consul cluster,2
+ssh -T git@github.com,tests SSH connectivity to GitHub,0
+ssh-agent bash,starts SSH agent in new shell for key management,0
+ssh user@prod-server,opens an SSH session to a remote server,1
+ssh -i key.pem ec2-user@1.2.3.4,opens SSH session using private key,1
+ssh -L 5432:localhost:5432 user@bastion,creates SSH tunnel for local port forwarding,1
+ssh-keygen -t ed25519 -C "deploy@company.com",generates a new ED25519 SSH key pair,1
+ssh-keygen -f ~/.ssh/id_rsa -N "",generates an RSA SSH key with no passphrase,1
+ssh-copy-id user@remote-server,copies local public SSH key to remote authorized keys,1
+scp -r ./build user@server:/var/www/html,securely copies a directory to a remote server,1
+rsync -avz ./src/ user@server:/app/src/,syncs local directory to remote server,1
+rsync -avz --delete ./src/ user@server:/app/src/,syncs to remote deleting files not in source,2
+ssh user@prod-server "sudo shutdown -h now",remotely shuts down a production server via SSH,2
+ssh -i key.pem ec2-user@1.2.3.4 "sudo rm -rf /var/log/*",remotely deletes all logs on a remote server,2
+openssl s_client -connect example.com:443,establishes TLS connection to inspect server certificate,0
+openssl verify -CAfile ca.crt cert.crt,validates a certificate against a CA bundle,0
+openssl dgst -sha256 file.tar.gz,computes SHA256 checksum of a file,0
+openssl genrsa -out private.key 4096,generates a 4096-bit RSA private key,1
+openssl req -new -key private.key -out request.csr,creates a certificate signing request,1
+openssl x509 -req -in request.csr -signkey private.key -out cert.crt,self-signs a certificate using private key,1
+certbot certonly --standalone -d example.com,obtains an SSL certificate for a domain,1
+certbot renew --force-renewal,forces renewal of all installed SSL certificates,1
+certbot delete --cert-name example.com,removes a certificate from the local store,2
+sudo useradd -m -s /bin/bash newuser,creates a new user account with home directory,1
+sudo groupadd devteam,creates a new system group,1
+sudo chmod 600 /etc/ssh/sshd_config,restricts SSH config file access to root only,1
+sudo chown -R www-data:www-data /var/www,changes ownership of web directory to web server user,1
+sudo chown root:root /etc/passwd,restores correct ownership of system password file,1
+sudo mount /dev/sdb1 /mnt/data,mounts a disk partition to the filesystem,1
+sudo umount /mnt/data,unmounts a filesystem,1
+sudo apt install nginx,installs the nginx web server,1
+sudo apt autoremove,removes unused dependency packages,1
+sudo dpkg -i package.deb,installs a Debian package bypassing apt,1
+sudo snap install code --classic,installs VS Code via snap,1
+sudo systemctl start nginx,starts a systemd service,1
+sudo systemctl stop nginx,stops a running systemd service,1
+sudo systemctl restart postgresql,restarts a service applying configuration changes,1
+sudo systemctl reload nginx,reloads service config without dropping connections,1
+sudo systemctl enable nginx,enables a service to start on boot,1
+sudo systemctl daemon-reload,reloads systemd configuration for new unit files,1
+sudo ufw enable,activates the uncomplicated firewall,1
+sudo ufw allow 22/tcp,opens port 22 for SSH in the firewall,1
+sudo ufw deny 3306,blocks all traffic to MySQL port in the firewall,1
+sudo sshd -t,tests SSH daemon configuration for syntax errors,1
+sudo add-apt-repository ppa:deadsnakes/ppa,adds a third-party PPA to apt sources,1
+sudo apt-get install --only-upgrade openssl,upgrades only openssl to patch a vulnerability,1
+sudo auditctl -e 1,enables the Linux audit daemon,1
+sudo auditctl -w /etc/passwd -p wa,adds audit watch rule on passwd file,1
+sudo fail2ban-client set sshd unbanip 1.2.3.4,manually unbans an IP from fail2ban SSH jail,1
+sudo sysctl -w vm.swappiness=10,adjusts kernel swap usage aggressiveness,1
+sudo sysctl -w net.ipv4.ip_forward=1,enables IP forwarding for routing traffic,1
+sudo setenforce 1,sets SELinux back to enforcing mode,1
+sudo auditctl -w /etc/passwd -p wa,adds audit watch rule on sensitive system file,1
+sudo iptables -A INPUT -p tcp --dport 8080 -j ACCEPT,adds firewall rule allowing traffic on port 8080,1
+sudo ip link set eth0 up,enables a network interface restoring connectivity,1
+sudo cron -l,lists all cron jobs for root user,0
+sudo lsof -i :80,shows processes using port 80,0
+sudo netstat -tulnp,shows all active TCP/UDP listeners with process names,0
+sudo dmesg | tail -50,shows last 50 kernel ring buffer messages,0
+sudo lvm lvdisplay,displays all logical volumes in LVM,0
+sudo vgdisplay,shows volume group details in LVM,0
+sudo pvdisplay,displays physical volume attributes in LVM,0
+sudo ausearch -m avc -ts recent,searches audit logs for recent SELinux denials,0
+sudo aureport --summary,generates summary report of system audit log,0
+sudo fail2ban-client status,shows status of all fail2ban jails,0
+sudo ss -tulnp,shows socket statistics and listening ports,0
+sudo rm -rf /var/log/*,permanently deletes all log files from system log directory,2
+sudo rm -rf /tmp/*,removes all files from the temporary directory,2
+sudo dd if=/dev/zero of=/dev/sdb,overwrites a disk device with zeros wiping all data,2
+sudo mkfs.ext4 /dev/sdb1,formats a disk partition destroying all existing data,2
+sudo fdisk /dev/sda,launches interactive disk partitioning tool,2
+sudo passwd root,changes the root account password,2
+sudo visudo,opens the sudoers configuration file,2
+sudo systemctl disable firewalld,disables the firewall service from starting on boot,2
+sudo iptables -F,flushes all firewall rules removing all traffic filtering,2
+sudo crontab -e,edits the root cron table,2
+sudo userdel -r olduser,removes a user account and home directory,2
+sudo usermod -aG sudo username,adds a user to the sudo group granting admin privileges,2
+sudo groupdel devteam,deletes a system group,2
+sudo chmod 777 /var/www/html,grants full permissions to all users on a directory — insecure,2
+sudo apt remove --purge nginx,removes nginx and all configuration files,2
+sudo apt full-upgrade,upgrades all packages resolving dependency changes,2
+sudo apt-get dist-upgrade,performs full distribution upgrade potentially installing new kernel,2
+sudo snap remove code,removes a snap-installed application and its data,2
+sudo systemctl disable ssh,disables SSH service from starting on boot,2
+sudo systemctl mask nginx,completely disables a service preventing any start,2
+sudo journalctl --vacuum-time=7d,deletes journal logs older than 7 days,2
+sudo ufw disable,disables the firewall removing all traffic filtering,2
+sudo ufw delete allow 80,removes the firewall rule allowing traffic on port 80,2
+sudo ssh-keygen -f /etc/ssh/ssh_host_rsa_key,regenerates SSH host RSA key changing server identity,2
+sudo kill -9 $(pidof apache2),force-kills all Apache processes immediately,2
+sudo killall nginx,terminates all nginx processes on the system,2
+sudo reboot,immediately reboots the system,2
+sudo shutdown -h now,immediately halts and powers off the system,2
+sudo halt,stops all processes and halts the CPU,2
+sudo lvextend -L +10G /dev/vg0/lv0,extends a logical volume by 10GB,2
+sudo vgextend vg0 /dev/sdc,adds a physical volume to a volume group,2
+sudo pvremove /dev/sdb,removes a physical volume from LVM management,2
+sudo e2fsck -f /dev/sdb1,runs filesystem check on a partition,2
+sudo resize2fs /dev/sdb1,resizes an ext4 filesystem to use available space,2
+sudo setenforce 0,sets SELinux to permissive mode disabling enforcement,2
+sudo iptables -P INPUT DROP,sets default firewall policy to drop all incoming traffic,2
+sudo iptables -D INPUT -p tcp --dport 8080 -j ACCEPT,removes a firewall rule,2
+sudo ip link set eth0 down,disables a network interface disrupting connectivity,2
+sudo fail2ban-client set sshd banip 1.2.3.4,manually bans an IP in fail2ban SSH jail,2
+sudo fail2ban-client stop,stops the fail2ban service,2
+sudo apt-key del KEYID,removes a GPG key from the apt keyring,2
+sudo rpm -e package,removes an installed RPM package,2
+sudo yum remove httpd,removes the Apache HTTP server,2
+sudo snap remove code,removes a snap application and its data,2
+sudo pacman -Rns package,removes an Arch package with unused dependencies,2
+brew install postgresql,installs PostgreSQL via Homebrew,1
+brew upgrade,upgrades all installed Homebrew packages,1
+brew tap homebrew/cask,adds the Homebrew Cask tap,1
+brew install --cask docker,installs Docker Desktop via Homebrew Cask,1
+brew services start postgresql,starts PostgreSQL as macOS background service,1
+brew services stop postgresql,stops PostgreSQL Homebrew background service,1
+brew cleanup,removes outdated versions of Homebrew packages,1
+brew uninstall postgresql,removes PostgreSQL installed via Homebrew,2
+pytest --cov=app tests/,runs tests and generates code coverage report,0
+pytest -x tests/,runs tests and stops at first failure,0
+pytest -v,runs tests with verbose output,0
+coverage run -m pytest,runs tests under coverage measurement tool,0
+coverage report,displays summary of test code coverage,0
+jest --coverage,runs Jest tests and generates coverage report,0
+jest --watchAll,runs Jest tests in watch mode re-running on file changes,0
+mocha test/,runs Mocha tests from the test directory,0
+go test ./...,runs all tests in all Go packages,0
+cargo test,compiles and runs all Rust tests,0
+mvn test,runs all Java unit tests,0
+gradle test,executes all Gradle tests,0
+dotnet test,executes unit tests in .NET project,0
+k6 run script.js,executes a k6 load test script,1
+ab -n 1000 -c 50 https://example.com/,runs 1000 Apache Bench requests with 50 concurrent,1
+locust -f locustfile.py --headless -u 100,runs headless Locust load test simulating 100 users,1
+artillery run load-test.yml,executes load test scenario defined in Artillery config,1
+cypress run,executes Cypress end-to-end tests in headless mode,1
+sonar-scanner,runs SonarQube code quality and security analysis,0
+hadolint Dockerfile,lints Dockerfile for best practices,0
+shellcheck script.sh,analyzes shell script for bugs and style issues,0
+eslint src/,runs ESLint across JavaScript files,0
+prettier --write .,reformats all files to match Prettier code style,1
+trivy image myapp:latest,scans container image for known vulnerabilities,0
+snyk test,tests project dependencies for known vulnerabilities,0
+bandit -r ./app,scans Python source code for security vulnerabilities,0
+semgrep --config=auto .,runs Semgrep static analysis with auto-detected rules,0
+checkov -d .,scans IaC files for security misconfigurations,0
+tflint,runs TFLint to detect Terraform configuration issues,0
+gh repo clone owner/repo,clones a GitHub repository using GitHub CLI,1
+gh pr create --title "Fix bug" --body "Details",creates a pull request on GitHub,1
+gh pr close 42,closes a pull request without merging it,1
+gh issue create --title "Bug" --body "Description",creates a new GitHub issue,1
+gh release create v1.0 --generate-notes,creates a new GitHub release with auto-generated notes,1
+gh workflow run ci.yml,manually triggers a GitHub Actions workflow run,1
+gh repo fork owner/repo,forks a GitHub repository into your account,1
+gh org list,lists all GitHub organizations you belong to,0
+gh run list --workflow ci.yml,lists recent runs of a GitHub Actions workflow,0
+gh pr list --state open,lists all open pull requests,0
+gh release list,lists all releases in current repository,0
+gh pr merge 42 --squash,merges a pull request using squash merge,2
+gh secret set DB_PASSWORD,sets a repository secret in GitHub Actions,2
+gh secret delete DB_PASSWORD,deletes a repository secret from GitHub Actions,2
+gh repo delete owner/repo --confirm,permanently deletes a GitHub repository,2
+gh api repos/:owner/:repo/actions/runs --method DELETE,deletes all workflow run history,2
+gh release delete v1.0 --yes,permanently deletes a GitHub release and tag,2
+gh repo archive owner/repo,archives a repository making it read-only,2
+gh team remove-member myorg myteam username,removes a user from a GitHub team,2
+vagrant up,starts and provisions the development VM,1
+vagrant halt,gracefully shuts down the Vagrant VM,1
+vagrant reload --provision,restarts VM and re-runs provisioner scripts,1
+vagrant snapshot save baseline,saves a snapshot of current VM state,1
+vagrant ssh,opens SSH connection to the Vagrant machine,0
+vagrant destroy -f,forcefully destroys the Vagrant VM and all resources,2
+vagrant snapshot restore baseline,restores VM to a previously saved snapshot,2
+pulumi up,deploys infrastructure changes defined in Pulumi code,2
+pulumi destroy,tears down all Pulumi-managed cloud infrastructure,2
+pulumi stack rm production,removes a Pulumi stack and its state,2
+pulumi config set DB_PASSWORD --secret,stores an encrypted secret in Pulumi stack config,1
+pulumi stack ls,lists all Pulumi stacks in current project,0
+cdk deploy,synthesizes and deploys CDK stacks to AWS,2
+cdk destroy,destroys all AWS resources created by the CDK stack,2
+cdk diff,shows differences between current stack and deployed infrastructure,0
+cdk synth,synthesizes CDK app to CloudFormation templates without deploying,0
+serverless deploy,packages and deploys serverless functions to cloud provider,2
+serverless remove,removes all deployed serverless resources,2
+serverless invoke -f myFunction,invokes a deployed serverless function,1
+argocd app sync myapp,triggers sync reconciling ArgoCD application with GitOps source,2
+argocd app delete myapp --cascade,deletes ArgoCD application and all Kubernetes resources,2
+argocd app rollback myapp 5,rolls back ArgoCD application to previous revision,2
+argocd app set myapp --sync-policy automated,enables automated sync on ArgoCD application,1
+argocd app get myapp,shows current status and health of ArgoCD application,0
+argocd app list,lists all applications managed by ArgoCD,0
+argocd repo add https://github.com/org/repo,adds a Git repository to ArgoCD for GitOps management,1
+argocd cluster add prod-context,registers a Kubernetes cluster with ArgoCD,2
+flux reconcile source git flux-system,forces immediate reconciliation of Flux GitOps source,1
+flux suspend kustomization myapp,pauses automated reconciliation for a Flux kustomization,1
+flux resume kustomization myapp,re-enables reconciliation for suspended Flux kustomization,1
+flux delete kustomization myapp,removes a kustomization from Flux management,2
+flux get kustomizations,lists all Flux kustomizations and reconciliation status,0
+flux logs,displays logs from Flux controllers,0
+nmap -Pn -p 22,80,443 10.0.0.1,scans specific ports on a host,1
+tcpdump -i eth0 -w capture.pcap,captures network packets and writes to file,1
+nmap -sS -p 1-65535 192.168.1.0/24,performs full TCP SYN scan across all ports on subnet,2
+nmap -sV --script vuln 10.0.0.1,runs vulnerability detection scripts against a host,2
+strace -p 1234,attaches to a running process and traces system calls,1
+gdb ./app core,loads core dump into GDB for post-mortem debugging,1
+valgrind --leak-check=full ./app,runs binary under Valgrind detecting memory leaks,1
+perf stat ./app,collects CPU performance counter statistics,1
+perf record -g ./app,records a performance profile with call graph data,1
+gcc -o app app.c -lm,compiles a C source file into executable binary,1
+g++ -o app app.cpp -std=c++17,compiles a C++ source file using C++17 standard,1
+clang -o app app.c -O2,compiles C code using Clang with optimization,1
+cmake .. -DCMAKE_BUILD_TYPE=Release,configures a CMake build in release mode,1
+meson setup builddir,configures a Meson build system project,1
+bazel build //...,builds all targets in the Bazel workspace,1
+msbuild /t:Rebuild /p:Configuration=Release,rebuilds .NET solution in Release mode,1
+xcodebuild -scheme MyApp -configuration Release archive,archives Xcode project for release distribution,1
+adb install app.apk,installs an APK onto connected Android device,1
+adb shell am force-stop com.example.app,force-stops an app on Android device,1
+xcrun simctl boot "iPhone 15",boots a named iOS simulator,1
+xcrun simctl install booted app.app,installs app on booted iOS simulator,1
+dotnet restore,restores all NuGet dependencies for .NET project,1
+dotnet build,compiles the .NET application and dependencies,1
+dotnet publish -c Release -o ./publish,builds and publishes .NET app for deployment,1
+dotnet ef migrations add InitialCreate,creates a new Entity Framework migration,1
+dotnet tool install -g dotnet-ef,installs EF Core CLI tool globally,1
+cmake --build . --target install,builds and installs CMake project to the system,2
+ninja -C builddir install,builds and installs project using Ninja,2
+adb uninstall com.example.app,removes an app from connected Android device,2
+adb reboot,reboots the connected Android device,2
+adb root,restarts ADB daemon with root permissions,2
+xcrun simctl delete all,deletes all iOS simulators freeing disk space,2
+dotnet ef database update,applies all pending EF Core migrations to database,2
+dotnet ef database drop --force,drops database managed by EF Core without confirmation,2
+dotnet nuget push *.nupkg --source https://api.nuget.org/v3/index.json,publishes NuGet package to public registry,2
+bundle install,installs all Ruby gems from Gemfile,1
+bundle update,updates gems to latest versions allowed by Gemfile,2
+bundle exec rake db:migrate,runs pending ActiveRecord database migrations,2
+bundle exec rake db:drop,drops the Rails database,2
+bundle exec rake db:seed,populates Rails database with seed data,1
+bundle exec rails server,starts the Rails web application server,1
+php artisan migrate,runs all pending Laravel database migrations,2
+php artisan migrate:rollback,reverts the last batch of Laravel migrations,2
+php artisan db:seed,seeds the Laravel database with fixtures,1
+php artisan cache:clear,clears the Laravel application cache,1
+php artisan queue:work,starts processing jobs from the Laravel queue,1
+php artisan config:cache,caches Laravel configuration for faster bootstrapping,1
+php artisan optimize:clear,clears all Laravel cached files,1
+composer install,installs PHP dependencies from composer.lock,1
+composer require guzzlehttp/guzzle,adds Guzzle HTTP client as PHP dependency,1
+composer update,updates all PHP packages to latest allowed versions,2
+composer remove phpunit/phpunit,removes PHPUnit from project dependencies,2
+composer dump-autoload,regenerates Composer autoload files,1
+flutter pub get,downloads all Flutter package dependencies,1
+flutter build apk --release,compiles release APK for Android distribution,1
+flutter build ios --release,builds Flutter app for iOS release,1
+flutter run,launches Flutter app on connected device,1
+flutter clean,removes Flutter build cache and generated files,1
+flutter pub upgrade,upgrades all Flutter packages to latest compatible versions,2
+dart pub publish,publishes a Dart package to pub.dev,2
+pyinstaller --onefile app.py,bundles Python application into single standalone executable,1
+cython app.pyx,compiles a Cython file to C source code,1
+wasm-pack build --target web,compiles Rust project to WebAssembly for web deployment,1
+wasm-pack publish,publishes compiled WebAssembly package to npm,2
+istioctl install --set profile=production,installs Istio service mesh with production profile,2
+istioctl uninstall --purge,completely removes Istio from cluster including all CRDs,2
+istioctl analyze,runs Istio configuration analysis to detect issues,0
+kustomize build overlays/production | kubectl apply -f -,renders Kustomize overlays and applies to cluster,2
+kustomize edit set image myapp=myapp:v2,updates container image reference in kustomization.yaml,1
+velero backup create daily-backup --include-namespaces production,creates Velero backup of a Kubernetes namespace,1
+velero restore create --from-backup daily-backup,restores Kubernetes namespace from Velero backup,2
+velero backup delete daily-backup,deletes a Velero backup and associated storage data,2
+skaffold run,builds container images and deploys to cluster,2
+skaffold delete,removes all Kubernetes resources deployed by Skaffold,2
+skaffold dev,runs development loop rebuilding and redeploying on changes,1
+skaffold build,builds container images without deploying,1
+cosign sign myimage:latest,cryptographically signs a container image,2
+cosign verify myimage:latest,verifies cryptographic signature of a container image,0
+kube-bench run --targets node,runs CIS Kubernetes benchmark checks against a node,0
+kubescape scan framework NSA,scans cluster against NSA Kubernetes hardening framework,0
+kubectl debug node/node-1 -it --image=ubuntu,creates debug pod on a node for live troubleshooting,1
+kubectl debug pod/app-xyz -it --copy-to=debug-pod,creates debugging copy of a pod,1
+minikube start --cpus=4 --memory=8192,starts local minikube Kubernetes cluster with resources,1
+minikube stop,stops the running minikube cluster,1
+minikube addons enable ingress,enables NGINX ingress controller in minikube,1
+minikube image load myapp:latest,loads local Docker image into minikube cluster,1
+minikube delete,deletes minikube cluster and all associated data,2
+kind create cluster --name dev,creates local Kubernetes cluster using Docker,1
+kind delete cluster --name dev,deletes local KinD Kubernetes development cluster,2
+k3d cluster create dev,creates lightweight k3s Kubernetes cluster inside Docker,1
+k3d cluster delete dev,deletes a k3d development Kubernetes cluster,2
+vcluster create dev --namespace dev,creates a virtual Kubernetes cluster inside a real cluster,2
+vcluster delete dev --namespace dev,deletes a virtual cluster and all its resources,2
+packer build template.json,builds a machine image from a Packer template,2
+packer validate template.json,validates a Packer template for errors,0
+nomad job run app.nomad,submits and runs a Nomad job on the cluster,2
+nomad job stop app,stops a running Nomad job removing all allocations,2
+nomad job plan app.nomad,shows diff of changes a Nomad job run would make,0
+claude --version,shows the installed Claude Code CLI version,0
+claude --help,shows Claude Code CLI usage and available flags,0
+claude config list,lists current Claude Code configuration values,0
+claude mcp list,lists configured MCP servers for Claude Code,0
+claude,starts an interactive Claude Code session in the current directory,1
+claude -p "explain this function",runs a one-off prompt against Claude Code without entering interactive mode,1
+claude --continue,resumes the most recent Claude Code conversation,1
+claude --resume,lets you pick a previous Claude Code session to resume,1
+claude config set,modifies a Claude Code configuration value,1
+claude mcp add,adds a new MCP server connection to Claude Code,1
+claude mcp remove,removes an MCP server connection from Claude Code,1
+claude update,updates the Claude Code CLI to the latest version,1
+gh copilot suggest "explain this regex",asks GitHub Copilot CLI to suggest a command or explanation,0
+gh copilot explain "find . -name '*.log' -delete",asks GitHub Copilot CLI to explain what a command does,0
+copilot --version,shows the installed GitHub Copilot CLI version,0
+cursor --version,shows the installed Cursor editor CLI version,0
+cursor .,opens the current directory in the Cursor AI editor,1
+aider --version,shows the installed Aider AI pair programming tool version,0
+aider,starts an interactive Aider AI coding session in current repo,1
+aider --model gpt-4,starts Aider using a specified LLM backend,1
+aider --commit,asks Aider to generate and create a git commit from changes,1
+ollama list,lists locally downloaded Ollama models,0
+ollama ps,shows currently running Ollama model processes,0
+ollama show llama3,shows details and parameters for a local Ollama model,0
+ollama run llama3,starts an interactive chat session with a local LLM via Ollama,1
+ollama pull llama3,downloads a model to run locally via Ollama,1
+ollama pull codellama:13b,downloads a specific code-focused local model,1
+ollama create mymodel -f Modelfile,builds a custom Ollama model from a Modelfile,1
+ollama rm llama3,deletes a locally downloaded Ollama model freeing disk space,2
+ollama stop llama3,stops a running Ollama model process,1
+openai api models.list,lists available OpenAI models accessible with your API key,0
+openai api chat.completions.create -m gpt-4 -g user "hello",sends a one-off chat completion request to the OpenAI API,1
+llm models,lists available models configured for the llm CLI tool,0
+llm "summarize this file" < notes.txt,pipes file content into a prompt using the llm CLI tool,1
+llm keys set openai,stores an API key for a provider in the llm CLI tool,1
+chatgpt --version,shows the installed unofficial ChatGPT CLI version,0
+sgpt "explain this error",sends a one-off prompt to a GPT-backed shell assistant,1
+sgpt --code "python function to reverse a string",asks a GPT shell assistant to generate code directly,1
+huggingface-cli login,authenticates the Hugging Face CLI with an access token,1
+huggingface-cli download meta-llama/Llama-3-8B,downloads a model from the Hugging Face Hub,1
+huggingface-cli whoami,shows the currently authenticated Hugging Face account,0
+huggingface-cli scan-cache,lists locally cached Hugging Face models and their disk usage,0
+huggingface-cli delete-cache,removes cached Hugging Face models freeing disk space,2
+transformers-cli env,prints environment info for debugging transformers installs,0
+litellm --model gpt-4,starts a LiteLLM proxy server routing requests to a specified model,1
+vllm serve meta-llama/Llama-3-8B,starts a vLLM inference server for a hosted model,2
+text-generation-launcher --model-id meta-llama/Llama-3-8B,launches a Hugging Face TGI inference server,2
+langchain --version,shows the installed LangChain CLI version,0
+llamaindex --version,shows the installed LlamaIndex CLI version,0
