@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Command.ai — Session Dashboard</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/tabler-icons.min.css">
+<style>
+  :root {
+    --bg: #ffffff; --bg-secondary: #f5f4f0; --bg-tertiary: #ebe9e3;
+    --text: #1a1a18; --text-secondary: #5f5e5a; --text-tertiary: #888780;
+    --border: rgba(0,0,0,0.1); --border-strong: rgba(0,0,0,0.18);
+    --success-bg: #eaf3de; --success-text: #27500a;
+    --warning-bg: #faeeda; --warning-text: #633806;
+    --danger-bg: #fcebeb; --danger-text: #791f1f;
+    --radius-md: 8px; --radius-lg: 12px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1c1a; --bg-secondary: #272725; --bg-tertiary: #323230;
+      --text: #f1efe8; --text-secondary: #b4b2a9; --text-tertiary: #888780;
+      --border: rgba(255,255,255,0.12); --border-strong: rgba(255,255,255,0.2);
+      --success-bg: #173404; --success-text: #c0dd97;
+      --warning-bg: #412402; --warning-text: #fac775;
+      --danger-bg: #501313; --danger-text: #f7c1c1;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 2rem; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    max-width: 800px; margin: 0 auto;
+  }
+  .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+  .brand { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 500; }
+  .controls { display: flex; gap: 8px; }
+  select, button {
+    font-size: 13px; height: 34px; padding: 0 12px; border-radius: var(--radius-md);
+    border: 0.5px solid var(--border-strong); background: var(--bg); color: var(--text);
+    cursor: pointer; font-family: inherit;
+  }
+  button { display: flex; align-items: center; gap: 6px; }
+  button:hover { background: var(--bg-secondary); }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 1.75rem; }
+  .stat-card { background: var(--bg-secondary); border-radius: var(--radius-md); padding: 1rem; }
+  .stat-label { font-size: 13px; color: var(--text-secondary); margin: 0 0 4px; }
+  .stat-value { font-size: 24px; font-weight: 500; margin: 0; }
+  .stat-value.danger { color: var(--danger-text); }
+  .group-block { margin-bottom: 1.5rem; }
+  .group-header {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+    font-size: 13px; font-weight: 500; color: var(--text-secondary);
+  }
+  .group-count { font-size: 12px; color: var(--text-tertiary); font-weight: 400; }
+  .group-actions { display: flex; gap: 4px; margin-left: auto; opacity: 0; transition: opacity 0.15s; }
+  .group-block:hover .group-actions { opacity: 1; }
+  .group-actions button {
+    font-size: 11px; height: 24px; padding: 0 8px; gap: 4px;
+  }
+  .group-drop-target {
+    border: 1.5px dashed transparent; border-radius: var(--radius-lg);
+    transition: border-color 0.15s, background 0.15s; padding: 2px; margin: -2px;
+  }
+  .group-drop-target.drag-over {
+    border-color: var(--text-tertiary); background: var(--bg-secondary);
+  }
+  .card {
+    background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg);
+    padding: 1rem 1.25rem; margin-bottom: 10px; cursor: pointer;
+  }
+  .card:hover { border-color: var(--border-strong); }
+  .card-top { display: flex; align-items: center; justify-content: space-between; }
+  .card-left { display: flex; align-items: center; gap: 12px; }
+  .avatar {
+    width: 36px; height: 36px; border-radius: 50%; background: var(--bg-secondary);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 500; font-size: 12px; color: var(--text-secondary); flex-shrink: 0;
+  }
+  .name-row { display: flex; align-items: center; gap: 8px; }
+  .name { font-weight: 500; font-size: 14px; }
+  .live-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--success-text); }
+  .meta { font-size: 12px; color: var(--text-secondary); margin: 2px 0 0; }
+  .card-right { display: flex; align-items: center; gap: 10px; }
+  .badge { font-size: 12px; padding: 3px 10px; border-radius: var(--radius-md); font-weight: 500; }
+  .badge.high { background: var(--danger-bg); color: var(--danger-text); }
+  .badge.medium { background: var(--warning-bg); color: var(--warning-text); }
+  .badge.clean { background: var(--success-bg); color: var(--success-text); }
+  .chevron { font-size: 16px; color: var(--text-tertiary); transition: transform 0.15s; }
+  .card.open .chevron { transform: rotate(180deg); }
+  .detail { display: none; margin-top: 12px; padding-top: 12px; border-top: 0.5px solid var(--border); }
+  .card.open .detail { display: block; }
+  .detail p { font-size: 13px; color: var(--text-secondary); margin: 0 0 10px; line-height: 1.6; }
+  .log-view {
+    display: none; margin-top: 10px; background: var(--bg-tertiary); border-radius: var(--radius-md);
+    padding: 10px 12px; font-family: ui-monospace, monospace; font-size: 11px; white-space: pre-wrap;
+    max-height: 280px; overflow-y: auto; color: var(--text-secondary);
+  }
+  .empty { font-size: 13px; color: var(--text-tertiary); padding: 2rem 0; text-align: center; }
+  .summary-preview {
+    font-size: 12px; color: var(--text-tertiary); margin: 4px 0 0; line-height: 1.5;
+    display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .group-controls { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .group-controls select, .group-controls input {
+    font-size: 12px; height: 28px; padding: 0 8px; border-radius: var(--radius-md);
+    border: 0.5px solid var(--border-strong); background: var(--bg); color: var(--text);
+  }
+  .group-controls input { width: 130px; }
+  .group-controls button {
+    font-size: 12px; height: 28px; padding: 0 10px;
+  }
+  .group-controls .hint { font-size: 11px; color: var(--text-tertiary); width: 100%; margin-top: 2px; }
+  .current-group-pill {
+    display: inline-flex; align-items: center; gap: 4px; font-size: 11px;
+    background: var(--bg-secondary); color: var(--text-secondary);
+    padding: 2px 8px; border-radius: var(--radius-md); margin-left: 8px;
+  }
+  .save-toast {
+    position: fixed; bottom: 20px; right: 20px; background: var(--success-bg); color: var(--success-text);
+    padding: 8px 14px; border-radius: var(--radius-md); font-size: 13px; opacity: 0; transition: opacity 0.2s;
+    pointer-events: none;
+  }
+  .save-toast.show { opacity: 1; }
+  .save-toast.error { background: var(--danger-bg); color: var(--danger-text); }
+  .stop-btn { color: var(--danger-text); }
+  .modal-backdrop {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+    align-items: center; justify-content: center; z-index: 10;
+  }
+  .modal-backdrop.show { display: flex; }
+  .modal {
+    background: var(--bg); border-radius: var(--radius-lg); padding: 1.5rem;
+    width: 360px; border: 0.5px solid var(--border-strong);
+  }
+  .modal h3 { margin: 0 0 1rem; font-size: 16px; font-weight: 500; }
+  .modal label { font-size: 12px; color: var(--text-secondary); display: block; margin: 12px 0 4px; }
+  .modal label:first-of-type { margin-top: 0; }
+  .modal input, .modal select { width: 100%; height: 34px; }
+  .modal .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 1.25rem; }
+  .modal .error-msg { font-size: 12px; color: var(--danger-text); margin-top: 8px; display: none; }
+  .primary-btn { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .primary-btn:hover { opacity: 0.85; background: var(--text); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><i class="ti ti-terminal-2" aria-hidden="true"></i> Session dashboard</div>
+  <div class="controls">
+    <select id="groupFilter"><option value="all">All groups</option></select>
+    <button id="refreshBtn"><i class="ti ti-refresh" aria-hidden="true"></i> Refresh</button>
+    <button id="newSessionBtn" class="primary-btn"><i class="ti ti-plus" aria-hidden="true"></i> New Session</button>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat-card"><p class="stat-label">Live now</p><p class="stat-value" id="liveCount">0</p></div>
+  <div class="stat-card"><p class="stat-label">Past sessions</p><p class="stat-value" id="pastCount">0</p></div>
+  <div class="stat-card"><p class="stat-label">High-risk blocked</p><p class="stat-value danger" id="highCount">0</p></div>
+  <div class="stat-card"><p class="stat-label">Total commands</p><p class="stat-value" id="cmdCount">0</p></div>
+</div>
+
+<div id="groupsContainer"></div>
+
+<div class="save-toast" id="saveToast"></div>
+
+<div class="modal-backdrop" id="launchModal">
+  <div class="modal">
+    <h3>Start a new session</h3>
+    <label for="launchUser">User</label>
+    <input type="text" id="launchUser" placeholder="e.g. akshat">
+
+    <label for="launchTier">Privilege tier</label>
+    <select id="launchTier">
+      <option value="0">0 — Standard (safe / read-only)</option>
+      <option value="1" selected>1 — Power user (normal ops)</option>
+      <option value="2">2 — Root/Admin (all commands)</option>
+    </select>
+
+    <label for="launchGroup">Group (optional)</label>
+    <input type="text" id="launchGroup" placeholder="e.g. prod-infra, leave blank for none" list="existingGroupsList">
+    <datalist id="existingGroupsList"></datalist>
+
+    <label for="launchCommands">Commands CSV path (optional)</label>
+    <input type="text" id="launchCommands" placeholder="e.g. lastest_commands.csv">
+
+    <p class="error-msg" id="launchError"></p>
+
+    <div class="modal-actions">
+      <button id="launchCancelBtn">Cancel</button>
+      <button id="launchConfirmBtn" class="primary-btn"><i class="ti ti-player-play" aria-hidden="true"></i> Launch</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let sessions = [];
+
+function riskLevel(s) {
+  if (s.highRisk > 0) return "high";
+  if (s.blocked > 0) return "medium";
+  return "clean";
+}
+function riskBadge(s) {
+  const level = riskLevel(s);
+  if (level === "high") return `<span class="badge high">${s.highRisk} high-risk</span>`;
+  if (level === "medium") return `<span class="badge medium">${s.blocked} blocked</span>`;
+  return `<span class="badge clean">clean</span>`;
+}
+function tierLabel(t) { return t === 2 ? "Root/Admin" : t === 1 ? "Power user" : "Standard"; }
+function initials(name) { return (name || "??").slice(0, 2).toUpperCase(); }
+function escHtml(s) {
+  const d = document.createElement('div'); d.textContent = s || ""; return d.innerHTML;
+}
+
+function sessionCard(s, idx) {
+  const groupPill = s.group
+    ? `<span class="current-group-pill"><i class="ti ti-folder-filled" aria-hidden="true"></i>${escHtml(s.group)}</span>`
+    : '';
+  const summaryPreview = s.summary
+    ? `<p class="summary-preview">${escHtml(s.summary)}</p>`
+    : '';
+
+  return `
+  <div class="card" id="card_${idx}" onclick="toggleCard(${idx})">
+    <div class="card-top">
+      <div class="card-left">
+        <div class="avatar">${initials(s.user)}</div>
+        <div>
+          <div class="name-row">
+            <span class="name">${escHtml(s.user)}</span>
+            ${s.alive ? '<span class="live-tag"><i class="ti ti-point-filled" aria-hidden="true"></i>live</span>' : ''}
+            ${groupPill}
+          </div>
+          <p class="meta">${tierLabel(s.tier)} · ${escHtml(s.started)} · ${s.totalCommands} commands</p>
+          ${summaryPreview}
+        </div>
+      </div>
+      <div class="card-right">
+        ${riskBadge(s)}
+        <i class="ti ti-chevron-down chevron" aria-hidden="true"></i>
+      </div>
+    </div>
+    <div class="detail">
+      <p><strong>Summary:</strong> ${escHtml(s.summary) || "No summary available yet (session still live or empty)."}</p>
+
+      <div class="group-controls" onclick="event.stopPropagation()">
+        <select id="groupSelect_${idx}">
+          <option value="">— No group —</option>
+        </select>
+        <input type="text" id="groupCustom_${idx}" placeholder="or type new group...">
+        <button onclick="saveGroup(${idx}, '${s.session}')">
+          <i class="ti ti-check" aria-hidden="true"></i> Apply
+        </button>
+        ${s.group ? `<button onclick="ungroupSession(${idx}, '${s.session}')"><i class="ti ti-x" aria-hidden="true"></i> Ungroup</button>` : ''}
+        ${s.alive ? '<span class="hint">⚠ Live session — group may be overwritten by the running terminal on its next command.</span>' : ''}
+      </div>
+
+      <div style="margin-top:10px; display:flex; gap:8px;">
+        <button onclick="event.stopPropagation(); viewLog('${s.session}', ${idx})">
+          <i class="ti ti-file-text" aria-hidden="true"></i> View full log
+        </button>
+        ${s.alive ? `<button class="stop-btn" onclick="event.stopPropagation(); stopSession('${s.session}', '${escHtml(s.user)}')"><i class="ti ti-player-stop" aria-hidden="true"></i> Stop session</button>` : ''}
+      </div>
+      <div class="log-view" id="log_${idx}"></div>
+    </div>
+  </div>`;
+}
+
+function toggleCard(idx) {
+  document.getElementById('card_' + idx).classList.toggle('open');
+}
+
+async function viewLog(sessionId, idx) {
+  const el = document.getElementById('log_' + idx);
+  el.style.display = el.style.display === 'block' ? 'none' : 'block';
+  if (el.style.display === 'block' && !el.dataset.loaded) {
+    el.textContent = "Loading...";
+    try {
+      const res = await fetch('/api/log?session=' + encodeURIComponent(sessionId));
+      el.textContent = await res.text();
+      el.dataset.loaded = "1";
+    } catch (e) {
+      el.textContent = "Could not load log: " + e;
+    }
+  }
+}
+
+function showToast(message, isError) {
+  const t = document.getElementById('saveToast');
+  t.textContent = message;
+  t.className = 'save-toast show' + (isError ? ' error' : '');
+  setTimeout(() => { t.className = 'save-toast'; }, 2200);
+}
+
+async function setGroup(sessionId, group) {
+  try {
+    const res = await fetch('/api/group', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ session: sessionId, group: group })
+    });
+    if (!res.ok) throw new Error('Server returned ' + res.status);
+    showToast(group ? `Moved to "${group}"` : 'Removed from group');
+    await loadSessions();
+  } catch (e) {
+    showToast('Could not update group: ' + e.message, true);
+  }
+}
+
+function saveGroup(idx, sessionId) {
+  const select = document.getElementById('groupSelect_' + idx);
+  const custom = document.getElementById('groupCustom_' + idx);
+  const group = (custom.value.trim() || select.value || "").trim();
+  setGroup(sessionId, group || null);
+}
+
+function ungroupSession(idx, sessionId) {
+  setGroup(sessionId, null);
+}
+
+function populateCardGroupSelects() {
+  const allGroups = [...new Set(sessions.map(s => s.group).filter(Boolean))].sort();
+  sessions.forEach((s, idx) => {
+    const select = document.getElementById('groupSelect_' + idx);
+    if (!select) return;
+    select.innerHTML = '<option value="">— No group —</option>' +
+      allGroups.map(g => `<option value="${escHtml(g)}" ${g === s.group ? 'selected' : ''}>${escHtml(g)}</option>`).join("");
+  });
+}
+
+function populateGroupFilter() {
+  const select = document.getElementById('groupFilter');
+  const groups = [...new Set(sessions.map(s => s.group).filter(Boolean))].sort();
+  select.innerHTML = '<option value="all">All groups</option>' +
+    groups.map(g => `<option value="${escHtml(g)}">${escHtml(g)}</option>`).join("") +
+    '<option value="none">Ungrouped</option>';
+}
+
+async function stopSession(sessionId, user) {
+  if (!confirm(`Stop the live session for "${user}"? This will terminate that terminal's process.`)) return;
+  try {
+    const res = await fetch('/api/kill', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ session: sessionId })
+    });
+    if (!res.ok) throw new Error('Server returned ' + res.status);
+    showToast('Session stopped');
+    await loadSessions();
+  } catch (e) {
+    showToast('Could not stop session: ' + e.message, true);
+  }
+}
+
+async function renameGroup(oldName) {
+  const newName = prompt(`Rename group "${oldName}" to:`, oldName);
+  if (newName === null || newName.trim() === oldName) return;
+  try {
+    const res = await fetch('/api/group/rename', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ from: oldName, to: newName.trim() })
+    });
+    if (!res.ok) throw new Error('Server returned ' + res.status);
+    const data = await res.json();
+    showToast(newName.trim() ? `Renamed "${oldName}" → "${newName.trim()}" (${data.updated} session(s))` : `Ungrouped ${data.updated} session(s)`);
+    await loadSessions();
+  } catch (e) {
+    showToast('Could not rename group: ' + e.message, true);
+  }
+}
+
+async function deleteGroup(name) {
+  if (!confirm(`Remove all sessions from group "${name}"? Sessions themselves are kept, just ungrouped.`)) return;
+  try {
+    const res = await fetch('/api/group/rename', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ from: name, to: "" })
+    });
+    if (!res.ok) throw new Error('Server returned ' + res.status);
+    const data = await res.json();
+    showToast(`Ungrouped ${data.updated} session(s) from "${name}"`);
+    await loadSessions();
+  } catch (e) {
+    showToast('Could not delete group: ' + e.message, true);
+  }
+}
+
+function render() {
+  const filter = document.getElementById('groupFilter').value;
+  const filtered = sessions.filter(s => {
+    if (filter === 'all') return true;
+    if (filter === 'none') return !s.group;
+    return s.group === filter;
+  });
+
+  const groups = {};
+  filtered.forEach(s => {
+    const key = s.group || "Ungrouped";
+    (groups[key] = groups[key] || []).push(s);
+  });
+
+  const order = Object.keys(groups).sort((a, b) => {
+    if (a === "Ungrouped") return 1;
+    if (b === "Ungrouped") return -1;
+    return a.localeCompare(b);
+  });
+
+  let html = "";
+  order.forEach(group => {
+    const items = groups[group].slice().sort((a, b) => (b.alive - a.alive) || (b.updated || "").localeCompare(a.updated || ""));
+    html += `<div class="group-block">
+      <div class="group-header">
+        <i class="ti ${group === 'Ungrouped' ? 'ti-folder' : 'ti-folder-filled'}" aria-hidden="true"></i>
+        ${escHtml(group)} <span class="group-count">(${items.length})</span>
+        ${group !== 'Ungrouped' ? `
+        <span class="group-actions">
+          <button onclick="renameGroup('${escHtml(group)}')"><i class="ti ti-edit" aria-hidden="true"></i> Rename</button>
+          <button onclick="deleteGroup('${escHtml(group)}')"><i class="ti ti-trash" aria-hidden="true"></i> Ungroup all</button>
+        </span>` : ''}
+      </div>
+      ${items.map(s => sessionCard(s, sessions.indexOf(s))).join("")}
+    </div>`;
+  });
+
+  document.getElementById('groupsContainer').innerHTML = html || '<div class="empty">No sessions match this filter.</div>';
+  document.getElementById('liveCount').textContent = sessions.filter(s => s.alive).length;
+  document.getElementById('pastCount').textContent = sessions.filter(s => !s.alive).length;
+  document.getElementById('highCount').textContent = sessions.reduce((a, s) => a + s.highRisk, 0);
+  document.getElementById('cmdCount').textContent = sessions.reduce((a, s) => a + s.totalCommands, 0);
+  populateCardGroupSelects();
+}
+
+async function loadSessions() {
+  try {
+    const res = await fetch('/api/sessions');
+    sessions = await res.json();
+  } catch (e) {
+    sessions = [];
+  }
+  populateGroupFilter();
+  render();
+}
+
+// ── Launch new session modal ──────────────────────────────────────────────
+
+function openLaunchModal() {
+  document.getElementById('launchError').style.display = 'none';
+  document.getElementById('launchUser').value = '';
+  document.getElementById('launchTier').value = '1';
+  document.getElementById('launchGroup').value = '';
+  document.getElementById('launchCommands').value = '';
+
+  const existingGroups = [...new Set(sessions.map(s => s.group).filter(Boolean))].sort();
+  document.getElementById('existingGroupsList').innerHTML =
+    existingGroups.map(g => `<option value="${escHtml(g)}">`).join("");
+
+  document.getElementById('launchModal').classList.add('show');
+}
+
+function closeLaunchModal() {
+  document.getElementById('launchModal').classList.remove('show');
+}
+
+async function confirmLaunch() {
+  const user     = document.getElementById('launchUser').value.trim();
+  const tier     = parseInt(document.getElementById('launchTier').value, 10);
+  const group    = document.getElementById('launchGroup').value.trim();
+  const commands = document.getElementById('launchCommands').value.trim();
+  const errEl    = document.getElementById('launchError');
+
+  try {
+    const res = await fetch('/api/launch', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user: user || null, tier, group: group || null, commands: commands || null })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || ('Server returned ' + res.status));
+
+    closeLaunchModal();
+    showToast('New terminal window opened — it will appear here once it starts.');
+    setTimeout(loadSessions, 1500);
+  } catch (e) {
+    errEl.textContent = e.message;
+    errEl.style.display = 'block';
+  }
+}
+
+document.getElementById('groupFilter').addEventListener('change', render);
+document.getElementById('refreshBtn').addEventListener('click', loadSessions);
+document.getElementById('newSessionBtn').addEventListener('click', openLaunchModal);
+document.getElementById('launchCancelBtn').addEventListener('click', closeLaunchModal);
+document.getElementById('launchConfirmBtn').addEventListener('click', confirmLaunch);
+document.getElementById('launchModal').addEventListener('click', (e) => {
+  if (e.target.id === 'launchModal') closeLaunchModal();
+});
+
+loadSessions();
+</script>
+</body>
+</html>

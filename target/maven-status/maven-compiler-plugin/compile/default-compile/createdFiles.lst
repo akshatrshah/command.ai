@@ -1,0 +1,6 @@
+ai/command/CommandAI.class
+ai/command/CommandAI$Dashboard.class
+ai/command/CommandAI$LogEntry.class
+ai/command/CommandAI$MlEngine.class
+ai/command/CommandAI$Dashboard$SessionInfo.class
+ai/command/CommandAI$CommandDef.class
