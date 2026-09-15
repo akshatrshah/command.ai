@@ -15,7 +15,7 @@ from pathlib import Path
 from collections import Counter
 
 # ── Config ────────────────────────────────────────────────────────────────────
-DATA_FILE  = Path("commands.csv")
+DATA_FILE  = Path("../data/commands.csv")
 MODEL_OUT  = Path.home() / ".command_ai" / "model"
 BASE_MODEL = "distilbert-base-uncased"
 EPOCHS     = 6        # best eval_loss was at epoch 3 — 6 gives headroom with early stopping
